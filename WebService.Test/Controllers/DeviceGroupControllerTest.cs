@@ -137,7 +137,7 @@ namespace WebService.Test.Controllers
         }
 
         [Fact]
-        public async Task CreatAsyncTest()
+        public async Task CreateAsyncTest()
         {
             var groupId = this.rand.NextString();
             var displayName = this.rand.NextString();

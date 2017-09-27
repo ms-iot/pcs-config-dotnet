@@ -25,6 +25,11 @@ namespace Microsoft.Azure.IoTSolutions.UIConfig.Services
         Task<DeviceGroup> CreateDeviceGroupAsync(DeviceGroup input);
         Task<DeviceGroup> UpdateDeviceGroupAsync(string id, DeviceGroup input, string etag);
         Task DeleteDeviceGroupAsync(string id);
+        Task<IEnumerable<Profile>> GetAllProfilesAsync();
+        Task<Profile> GetProfileAsync(string id);
+        Task<Profile> CreateProfileAsync(Profile input);
+        Task<Profile> UpdateProfileAsync(string id, Profile input, string etag);
+        Task DeleteProfileAsync(string id);
     }
 
     public class Storage : IStorage
@@ -37,6 +42,7 @@ namespace Microsoft.Azure.IoTSolutions.UIConfig.Services
         internal const string LOGO_KEY = "logo";
         internal const string USER_COLLECTION_ID = "user-settings";
         internal const string DEVICE_GROUP_COLLECTION_ID = "devicegroups";
+        internal const string PROFILE_COLLECTION_ID = "profiles";
         private const string BING_MAP_KEY_KEY = "BingMapKey";
 
         public Storage(
@@ -157,6 +163,45 @@ namespace Microsoft.Azure.IoTSolutions.UIConfig.Services
         private DeviceGroup CreateGroupServiceModel(ValueApiModel input)
         {
             var output = JsonConvert.DeserializeObject<DeviceGroup>(input.Data);
+            output.Id = input.Key;
+            output.ETag = input.ETag;
+            return output;
+        }
+
+        public async Task<IEnumerable<Profile>> GetAllProfilesAsync()
+        {
+            var response = await this.client.GetAllAsync(PROFILE_COLLECTION_ID);
+            return response.Items.Select(this.CreateProfileServiceModel);
+        }
+
+        public async Task<Profile> GetProfileAsync(string id)
+        {
+            var response = await this.client.GetAsync(PROFILE_COLLECTION_ID, id);
+            return this.CreateProfileServiceModel(response);
+        }
+
+        public async Task<Profile> CreateProfileAsync(Profile input)
+        {
+            var value = JsonConvert.SerializeObject(input, Formatting.Indented, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore });
+            var response = await this.client.CreateAsync(PROFILE_COLLECTION_ID, value);
+            return this.CreateProfileServiceModel(response);
+        }
+
+        public async Task<Profile> UpdateProfileAsync(string id, Profile input, string etag)
+        {
+            var value = JsonConvert.SerializeObject(input, Formatting.Indented, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore });
+            var response = await this.client.UpdateAsync(PROFILE_COLLECTION_ID, id, value, etag);
+            return this.CreateProfileServiceModel(response);
+        }
+
+        public async Task DeleteProfileAsync(string id)
+        {
+            await this.client.DeleteAsync(PROFILE_COLLECTION_ID, id);
+        }
+
+        private Profile CreateProfileServiceModel(ValueApiModel input)
+        {
+            var output = JsonConvert.DeserializeObject<Profile>(input.Data);
             output.Id = input.Key;
             output.ETag = input.ETag;
             return output;
