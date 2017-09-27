@@ -143,14 +143,14 @@ namespace Microsoft.Azure.IoTSolutions.UIConfig.Services
 
         public async Task<DeviceGroup> CreateDeviceGroupAsync(DeviceGroup input)
         {
-            var value = JsonConvert.SerializeObject(input, Formatting.Indented, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore });
+            var value = JsonConvert.SerializeObject(input, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore });
             var response = await this.client.CreateAsync(DEVICE_GROUP_COLLECTION_ID, value);
             return this.CreateGroupServiceModel(response);
         }
 
         public async Task<DeviceGroup> UpdateDeviceGroupAsync(string id, DeviceGroup input, string etag)
         {
-            var value = JsonConvert.SerializeObject(input, Formatting.Indented, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore });
+            var value = JsonConvert.SerializeObject(input, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore });
             var response = await this.client.UpdateAsync(DEVICE_GROUP_COLLECTION_ID, id, value, etag);
             return this.CreateGroupServiceModel(response);
         }
@@ -182,14 +182,14 @@ namespace Microsoft.Azure.IoTSolutions.UIConfig.Services
 
         public async Task<Profile> CreateProfileAsync(Profile input)
         {
-            var value = JsonConvert.SerializeObject(input, Formatting.Indented, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore });
+            var value = JsonConvert.SerializeObject(input, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore });
             var response = await this.client.CreateAsync(PROFILE_COLLECTION_ID, value);
             return this.CreateProfileServiceModel(response);
         }
 
         public async Task<Profile> UpdateProfileAsync(string id, Profile input, string etag)
         {
-            var value = JsonConvert.SerializeObject(input, Formatting.Indented, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore });
+            var value = JsonConvert.SerializeObject(input, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore });
             var response = await this.client.UpdateAsync(PROFILE_COLLECTION_ID, id, value, etag);
             return this.CreateProfileServiceModel(response);
         }

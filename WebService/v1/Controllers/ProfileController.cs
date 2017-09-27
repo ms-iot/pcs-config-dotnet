@@ -45,7 +45,7 @@ namespace Microsoft.Azure.IoTSolutions.UIConfig.WebService.v1.Controllers
         [HttpDelete("{id}")]
         public async Task DeleteAsync(string id)
         {
-            await this.storage.DeleteDeviceGroupAsync(id);
+            await this.storage.DeleteProfileAsync(id);
         }
     }
 }
