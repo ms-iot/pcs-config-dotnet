@@ -34,6 +34,8 @@ namespace Microsoft.Azure.IoTSolutions.UIConfig.Services.Models
         // ReSharper disable once InconsistentNaming
         GE, // >=
         // ReSharper disable once InconsistentNaming
-        IN // IN
+        IN, // IN
+        // ReSharper disable once InconsistentNaming
+        E   // Exists
     }
 }

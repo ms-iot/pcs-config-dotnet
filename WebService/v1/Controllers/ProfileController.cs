@@ -8,7 +8,7 @@ using Microsoft.Azure.IoTSolutions.UIConfig.WebService.v1.Models;
 
 namespace Microsoft.Azure.IoTSolutions.UIConfig.WebService.v1.Controllers
 {
-    [Route(Version.Path + "/profiles"), TypeFilter(typeof(ExceptionsFilterAttribute))]
+    [Route(Version.PATH + "/profiles"), TypeFilter(typeof(ExceptionsFilterAttribute))]
     public class ProfileController : Controller
     {
         private readonly IStorage storage;
